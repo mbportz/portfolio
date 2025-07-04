@@ -1,0 +1,109 @@
+@use "../abstracts/" as *;
+
+#featured-projects {
+   display: flex;
+   justify-content: center;
+   flex-direction: column;
+   align-content: center;
+   align-items: center;
+   text-align: center;
+   line-height: 1cm;
+   gap: 50px;
+   color: white;
+   font-size: 1rem;
+   letter-spacing: 1px;
+   font-weight: 300;
+}
+
+.section-header {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-content: center;
+   align-items: center;
+
+   h1 {
+      font-size: 2.5em;
+      font-weight: 700;
+      line-height: 1.5cm;
+   }
+
+   h2 {
+      max-width: 50vw;
+   }
+}
+
+.project-container {
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   gap: 70px;
+}
+
+.project-card {
+   flex: 1 1 clamp(400px, 20vw, 700px);
+   display: flex;
+   flex-direction: column;
+   border-radius: 20px;
+   background-color: rgba(255, 255, 255, 0.07);
+   text-align: left;
+   font-size: 0.9rem;
+   transition: transform 0.3s ease;
+
+   &:hover {
+      transform: scale(1.03);
+   }
+}
+
+.project-image {
+   height: clamp(200px, 14vw, 500px);
+   object-fit: cover;
+   border-radius: 20px 20px 0 0;
+   object-fit: cover;
+}
+
+.project-content {
+   display: flex;
+   flex-direction: column;
+   gap: 15px;
+   padding: 2rem;
+}
+
+.project-title {
+   font-size: 1.2rem;
+   font-weight: 800;
+   margin: 0;
+}
+
+.project-description {
+   line-height: 0.7cm;
+}
+
+.tech-stack {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 20px;
+   color: rgba(255, 255, 255, 0.7);
+
+   li {
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 20px;
+      padding-inline: 20px;
+      transition: background-color 0.5s ease;
+
+      &:hover {
+         background-color: rgba(255, 255, 255, 0.3);
+      }
+   }
+}
+
+.project-links {
+   display: flex;
+   gap: 20px;
+
+   a {
+      color: white;
+      text-decoration: none;
+      letter-spacing: 0.09rem;
+   }
+}

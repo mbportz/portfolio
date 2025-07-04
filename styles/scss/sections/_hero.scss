@@ -1,0 +1,87 @@
+@use "../abstracts/" as *;
+
+#hero {
+   display: flex;
+   min-height: 90vh;
+   align-items: center;
+   justify-content: center;
+   flex-direction: column;
+   color: white;
+   gap: 20px;
+
+   h1 {
+      font-size: clamp(3.5rem, 12vw, 5.5rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 0;
+   }
+
+   h3 {
+      font-size: 1.7em;
+      text-align: center;
+      width: 55vw;
+      line-height: 1.3em;
+   }
+
+   span {
+      background: linear-gradient(
+         90deg,
+         $hero-name-primary,
+         $hero-name-secondary
+      );
+      color: transparent;
+      background-clip: text;
+   }
+
+   div {
+      display: flex;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      a {
+         color: $seocondary-button-color;
+         text-align: center;
+         font-size: large;
+         font-weight: 600;
+         padding: 20px 40px;
+         margin: 20px;
+         border-radius: 70px;
+         background: transparent;
+         border-color: $seocondary-button-color;
+         border-width: 3px;
+         border-style: solid;
+         width: 10rem;
+         cursor: pointer;
+         transition: transform 0.3s ease, background-color 0.5s ease,
+            color 0.3s ease;
+
+         &:first-child {
+            background: linear-gradient(
+               90deg,
+               $hero-view-work-button-primary,
+               $hero-view-work-button-secondary
+            );
+            border-style: none;
+            text-align: center;
+            color: white;
+
+            &:hover {
+               transform: scale(1.1);
+            }
+         }
+
+         &:last-child {
+            color: $seocondary-button-color;
+
+            &:hover {
+               background-color: $seocondary-button-color;
+               color: white;
+            }
+         }
+      }
+   }
+}

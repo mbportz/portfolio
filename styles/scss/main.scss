@@ -1,0 +1,53 @@
+@use "abstracts" as *;
+@use "sections";
+@use "components";
+
+html {
+   scroll-behavior: smooth;
+}
+
+body {
+   display: flex;
+   flex-direction: column;
+   background: linear-gradient(-75deg, $primary-color, $secondary-color);
+   font-family: "Roboto", sans-serif;
+   color: white;
+   overscroll-behavior: none;
+}
+
+a {
+   text-decoration: none;
+}
+
+.paddings {
+   padding-inline: clamp(10px, 8vw, 900px);
+   padding-block: min(4em, 8%);
+}
+
+.link-disabled {
+   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+   .about-header {
+      text-align: center;
+      justify-content: center;
+   }
+
+   footer ul li {
+      display: flex;
+      background-color: rgba(255, 255, 255, 0.07);
+      border-radius: 50px;
+      transition: background-color 0.3s ease;
+      margin-block: 20px;
+      flex: 1 1 clamp(200px, 5vw, 500px);
+   }
+
+   .main-links {
+      display: none;
+   }
+
+   .ham-menu {
+      display: flex;
+   }
+}

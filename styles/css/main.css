@@ -330,7 +330,11 @@ nav ul li a:hover {
 }
 
 .project-description {
+  display: -webkit-box;
   line-height: 0.7cm;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .tech-stack {
@@ -541,6 +545,7 @@ a {
 
 .link-disabled {
   pointer-events: none;
+  opacity: 30%;
 }
 
 @media (max-width: 768px) {

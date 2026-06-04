@@ -77,7 +77,24 @@ cd your-repo
 
 ### ▶ Running the Project
 
-#### Option 1 — Live Sass Compiler (Recommended)
+#### Option 1 — npm (recommended)
+
+```bash
+git clone https://github.com/mbportz/portfolio.git
+cd portfolio
+npm install
+npm run dev
+```
+
+Open **http://localhost:8080**. `npm run dev` watches SCSS and serves the site.
+
+| Script | Purpose |
+| ------ | ------- |
+| `npm run dev` | Sass watch + local server |
+| `npm start` | Server only (port 8080) |
+| `npm run build` | Compile SCSS once |
+
+#### Option 2 — Live Sass Compiler (VS Code)
 
 1️⃣ Install the **Live Sass Compiler** extension in VSCode.
 2️⃣ Update `.vscode/settings.json`:
@@ -95,7 +112,7 @@ cd your-repo
 3️⃣ Click **"Watch Sass"** in VSCode.
 4️⃣ Edit any `.scss` file to generate CSS.
 
-#### Option 2 — Sass CLI
+#### Option 3 — Sass CLI only
 
 ```bash
 sass --watch styles/scss/main.scss:styles/css/main.css

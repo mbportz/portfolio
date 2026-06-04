@@ -545,7 +545,7 @@ a {
 
 .link-disabled {
   pointer-events: none;
-  opacity: 30%;
+  opacity: 50%;
 }
 
 @media (max-width: 768px) {
@@ -567,4 +567,6 @@ a {
   .ham-menu {
     display: flex;
   }
-}/*# sourceMappingURL=main.css.map */
+}
+
+/*# sourceMappingURL=main.css.map */

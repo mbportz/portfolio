@@ -8,11 +8,14 @@
       "watch:css": "sass --watch styles/scss/main.scss:styles/css/main.css --style=expanded",
       "start": "serve . -l 8080",
       "dev": "concurrently -n sass,server -c yellow,cyan \"npm run watch:css\" \"npm run start\"",
-      "build": "npm run build:css"
+      "build": "npm run build:css && npm run vercel:output",
+      "vercel:output": "rm -rf public && mkdir -p public && cp index.html scripts.js public/ && cp -r assets styles public/"
+   },
+   "dependencies": {
+      "sass": "^1.87.0"
    },
    "devDependencies": {
       "concurrently": "^9.1.2",
-      "sass": "^1.87.0",
       "serve": "^14.2.4"
    }
 }

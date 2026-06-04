@@ -4,6 +4,15 @@ const offScreenMenu = document.querySelector(".off-screen-menu");
 const offScreenMenuLinks = document.querySelectorAll(".off-screen-menu a");
 const emailButton = document.getElementById("email-btn");
 
+function setMobileMenuOpen(isOpen) {
+   if (!hamMenu || !offScreenMenu) return;
+
+   hamMenu.classList.toggle("active", isOpen);
+   offScreenMenu.classList.toggle("active", isOpen);
+   hamMenu.setAttribute("aria-expanded", String(isOpen));
+   hamMenu.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+}
+
 window.addEventListener("scroll", () => {
    if (window.scrollY > 700) {
       button.style.display = "flex";
@@ -25,22 +34,18 @@ window.addEventListener("resize", () => {
    const currentWidth = window.innerWidth;
 
    if (currentWidth > 768 && hamMenu) {
-      hamMenu.classList.remove("active");
-      offScreenMenu.classList.remove("active");
+      setMobileMenuOpen(false);
    }
 });
 
 hamMenu.addEventListener("click", () => {
-   hamMenu.classList.toggle("active");
-   offScreenMenu.classList.toggle("active");
+   const isOpen = !hamMenu.classList.contains("active");
+   setMobileMenuOpen(isOpen);
 });
 
 offScreenMenuLinks.forEach((link) => {
    link.addEventListener("click", () => {
-      if (hamMenu) {
-         hamMenu.classList.remove("active");
-         offScreenMenu.classList.remove("active");
-      }
+      setMobileMenuOpen(false);
    });
 });
 

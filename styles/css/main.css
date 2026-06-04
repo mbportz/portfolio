@@ -36,7 +36,7 @@
   flex-wrap: wrap;
   gap: 30px;
 }
-.general-tech-stack > div {
+.general-tech-stack > article {
   display: flex;
   flex-direction: column;
   flex: 1 1 clamp(50px, 20vw, 70px);
@@ -48,15 +48,16 @@
   text-align: left;
   gap: 20px;
 }
-.general-tech-stack > div:hover {
+.general-tech-stack > article:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }
-.general-tech-stack > div i {
+.general-tech-stack > article i {
   color: #436fb0;
   text-align: center;
 }
-.general-tech-stack > div h2 {
+.general-tech-stack > article .stack-title {
   font-weight: 700;
+  margin: 0;
 }
 
 #hero {
@@ -74,18 +75,19 @@
   text-align: center;
   margin-bottom: 0;
 }
-#hero h3 {
+#hero .hero-tagline {
   font-size: 1.7em;
   text-align: center;
   width: 55vw;
   line-height: 1.3em;
+  margin: 0;
 }
 #hero span {
   background: linear-gradient(90deg, #4d7cc4, #c9576a);
   color: transparent;
   background-clip: text;
 }
-#hero div {
+#hero .hero-actions {
   display: flex;
   width: 100%;
   justify-content: center;
@@ -94,7 +96,7 @@
   flex-direction: row;
   flex-wrap: wrap;
 }
-#hero div a {
+#hero .hero-actions a {
   color: #4a79c1;
   text-align: center;
   font-size: large;
@@ -110,19 +112,19 @@
   cursor: pointer;
   transition: transform 0.3s ease, background-color 0.5s ease, color 0.3s ease;
 }
-#hero div a:first-child {
+#hero .hero-actions a:first-child {
   background: linear-gradient(90deg, #436fb0, #b94b5e);
   border-style: none;
   text-align: center;
   color: white;
 }
-#hero div a:first-child:hover {
+#hero .hero-actions a:first-child:hover {
   transform: scale(1.1);
 }
-#hero div a:last-child {
+#hero .hero-actions a:last-child {
   color: #4a79c1;
 }
-#hero div a:last-child:hover {
+#hero .hero-actions a:last-child:hover {
   background-color: #4a79c1;
   color: white;
 }
@@ -195,7 +197,7 @@
   transform: translate(-50%, 50%) rotate(-45deg);
 }
 
-nav {
+header nav {
   display: flex;
   flex-direction: column;
   position: fixed;
@@ -204,19 +206,19 @@ nav {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   z-index: 1;
 }
-nav h2 {
+header nav .site-logo {
   font-weight: bold;
   font-size: x-large;
   background: linear-gradient(90deg, #b94b5e, #436fb0);
   color: transparent;
   background-clip: text;
 }
-nav ul li a {
+header nav ul li a {
   text-decoration: none;
   color: rgb(184, 184, 215);
   font-size: 1.1em;
 }
-nav ul li a:hover {
+header nav ul li a:hover {
   color: white;
 }
 
@@ -279,13 +281,15 @@ nav ul li a:hover {
   align-content: center;
   align-items: center;
 }
-.section-header h1 {
+.section-header h2 {
   font-size: 2.5em;
   font-weight: 700;
   line-height: 1.5cm;
+  margin: 0;
 }
-.section-header h2 {
+.section-header .section-lead {
   max-width: 50vw;
+  margin: 0;
 }
 
 .project-container {
@@ -355,12 +359,18 @@ nav ul li a:hover {
 
 .project-links {
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
+  position: static;
+  width: auto;
+  background: none;
+  box-shadow: none;
 }
 .project-links a {
   color: white;
   text-decoration: none;
   letter-spacing: 0.09rem;
+  font-size: inherit;
 }
 
 footer {
@@ -378,7 +388,7 @@ footer {
   letter-spacing: 1px;
   font-weight: 300;
 }
-footer h1 {
+footer h2 {
   font-size: 2.5em;
   font-weight: 700;
   line-height: 1.5cm;
@@ -523,6 +533,32 @@ footer ul li a i {
 
 html {
   scroll-behavior: smooth;
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 0.75rem 1rem;
+  background: white;
+  color: #253b5c;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 body {

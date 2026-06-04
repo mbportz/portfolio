@@ -297,27 +297,55 @@ header nav ul li a:hover {
   flex-wrap: wrap;
   justify-content: center;
   gap: 70px;
+  width: 100%;
 }
 
 .project-card {
-  flex: 1 1 clamp(400px, 20vw, 700px);
+  flex: 0 1 clamp(280px, 50% - 70px / 2, 650px);
+  width: min(100%, 650px);
+  max-width: 650px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   border-radius: 20px;
   background-color: rgba(255, 255, 255, 0.07);
   text-align: left;
   font-size: 0.9rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 .project-card:hover {
   transform: scale(1.03);
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (min-width: 1440px) {
+  .project-container {
+    display: grid;
+    grid-template-columns: repeat(2, 650px);
+    justify-content: center;
+    gap: 70px;
+  }
+  .project-card {
+    flex: none;
+    width: 650px;
+  }
+}
+.project-image-wrap {
+  overflow: hidden;
+  border-radius: 20px 20px 0 0;
 }
 
 .project-image {
+  display: block;
+  width: 100%;
   height: clamp(200px, 14vw, 500px);
   object-fit: cover;
-  border-radius: 20px 20px 0 0;
-  object-fit: cover;
+  transition: transform 0.5s ease;
+  will-change: transform;
+}
+
+.project-card:hover .project-image {
+  transform: scale(1.08);
 }
 
 .project-content {

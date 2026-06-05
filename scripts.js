@@ -53,3 +53,66 @@ emailButton.addEventListener("click", () => {
    const email = "mbportuguez2@gmail.com";
    window.location.href = `mailto:${email}`;
 });
+
+function initProjectDescriptions() {
+   const descriptions = document.querySelectorAll(".project-description");
+
+   descriptions.forEach((desc) => {
+      const text = desc.textContent.trim();
+
+      desc.innerHTML = `
+         <button type="button" class="project-description__toggle project-description__toggle--more" aria-expanded="false" hidden>... Read more</button>
+         <span class="project-description__text">${text}</span>
+         <button type="button" class="project-description__toggle project-description__toggle--less" hidden> Read less</button>
+      `;
+
+      const moreBtn = desc.querySelector(".project-description__toggle--more");
+      const lessBtn = desc.querySelector(".project-description__toggle--less");
+
+      const updateTruncation = () => {
+         desc.classList.remove("is-truncated");
+         moreBtn.hidden = true;
+         lessBtn.hidden = true;
+
+         if (desc.classList.contains("is-expanded")) {
+            lessBtn.hidden = false;
+            return;
+         }
+
+         desc.classList.add("is-truncated");
+
+         if (desc.scrollHeight > desc.clientHeight + 1) {
+            moreBtn.hidden = false;
+         } else {
+            desc.classList.remove("is-truncated");
+         }
+      };
+
+      moreBtn.addEventListener("click", () => {
+         desc.classList.add("is-expanded");
+         desc.classList.remove("is-truncated");
+         moreBtn.hidden = true;
+         moreBtn.setAttribute("aria-expanded", "true");
+         lessBtn.hidden = false;
+      });
+
+      lessBtn.addEventListener("click", () => {
+         desc.classList.remove("is-expanded");
+         moreBtn.setAttribute("aria-expanded", "false");
+         updateTruncation();
+      });
+
+      desc._updateTruncation = updateTruncation;
+      updateTruncation();
+   });
+
+   window.addEventListener("resize", () => {
+      descriptions.forEach((desc) => {
+         if (!desc.classList.contains("is-expanded")) {
+            desc._updateTruncation();
+         }
+      });
+   });
+}
+
+initProjectDescriptions();

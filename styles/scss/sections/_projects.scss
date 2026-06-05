@@ -35,7 +35,7 @@
    }
 }
 
-$project-card-width: 650px;
+$project-card-width: 580px;
 $project-grid-gap: 70px;
 
 .project-container {
@@ -65,6 +65,14 @@ $project-grid-gap: 70px;
    }
 }
 
+@media (min-width: 769px) and (max-width: 1439px) {
+   .project-card {
+      flex: 0 1 100%;
+      width: min(100%, $project-card-width);
+      max-width: $project-card-width;
+   }
+}
+
 @media (min-width: 1440px) {
    .project-container {
       display: grid;
@@ -87,7 +95,7 @@ $project-grid-gap: 70px;
 .project-image {
    display: block;
    width: 100%;
-   height: clamp(200px, 14vw, 500px);
+   height: clamp(280px, 20vw, 680px);
    object-fit: cover;
    transition: transform 0.5s ease;
    will-change: transform;
@@ -113,13 +121,19 @@ $project-grid-gap: 70px;
 .project-description {
    --desc-line-height: 0.7cm;
    --desc-lines: 2;
+   --desc-duration: 0.45s;
    margin: 0;
    line-height: var(--desc-line-height);
+   overflow: hidden;
+   transition: max-height var(--desc-duration) ease;
+
+   @media (prefers-reduced-motion: reduce) {
+      --desc-duration: 0.01s;
+   }
 }
 
-.project-description.is-truncated:not(.is-expanded) {
+.project-description.is-truncated:not(.is-expanded):not(.is-animating) {
    max-height: calc(var(--desc-line-height) * var(--desc-lines));
-   overflow: hidden;
 
    &::before {
       content: "";
@@ -134,7 +148,7 @@ $project-grid-gap: 70px;
    }
 }
 
-.project-description.is-expanded {
+.project-description.is-expanded:not(.is-animating) {
    max-height: none;
    overflow: visible;
 

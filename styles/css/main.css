@@ -301,9 +301,9 @@ header nav ul li a:hover {
 }
 
 .project-card {
-  flex: 0 1 clamp(280px, 50% - 70px / 2, 650px);
-  width: min(100%, 650px);
-  max-width: 650px;
+  flex: 0 1 clamp(280px, 50% - 70px / 2, 580px);
+  width: min(100%, 580px);
+  max-width: 580px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -318,16 +318,23 @@ header nav ul li a:hover {
   background-color: rgba(255, 255, 255, 0.12);
 }
 
+@media (min-width: 769px) and (max-width: 1439px) {
+  .project-card {
+    flex: 0 1 100%;
+    width: min(100%, 580px);
+    max-width: 580px;
+  }
+}
 @media (min-width: 1440px) {
   .project-container {
     display: grid;
-    grid-template-columns: repeat(2, 650px);
+    grid-template-columns: repeat(2, 580px);
     justify-content: center;
     gap: 70px;
   }
   .project-card {
     flex: none;
-    width: 650px;
+    width: 580px;
   }
 }
 .project-image-wrap {
@@ -338,7 +345,7 @@ header nav ul li a:hover {
 .project-image {
   display: block;
   width: 100%;
-  height: clamp(200px, 14vw, 500px);
+  height: clamp(280px, 20vw, 680px);
   object-fit: cover;
   transition: transform 0.5s ease;
   will-change: transform;
@@ -364,30 +371,37 @@ header nav ul li a:hover {
 .project-description {
   --desc-line-height: 0.7cm;
   --desc-lines: 2;
+  --desc-duration: 0.45s;
   margin: 0;
   line-height: var(--desc-line-height);
+  overflow: hidden;
+  transition: max-height var(--desc-duration) ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-description {
+    --desc-duration: 0.01s;
+  }
 }
 
-.project-description.is-truncated:not(.is-expanded) {
+.project-description.is-truncated:not(.is-expanded):not(.is-animating) {
   max-height: calc(var(--desc-line-height) * var(--desc-lines));
-  overflow: hidden;
 }
-.project-description.is-truncated:not(.is-expanded)::before {
+.project-description.is-truncated:not(.is-expanded):not(.is-animating)::before {
   content: "";
   float: right;
   width: 0;
   height: calc(var(--desc-line-height) * (var(--desc-lines) - 1));
 }
-.project-description.is-truncated:not(.is-expanded) .project-description__toggle--more {
+.project-description.is-truncated:not(.is-expanded):not(.is-animating) .project-description__toggle--more {
   float: right;
   clear: right;
 }
 
-.project-description.is-expanded {
+.project-description.is-expanded:not(.is-animating) {
   max-height: none;
   overflow: visible;
 }
-.project-description.is-expanded .project-description__toggle--more {
+.project-description.is-expanded:not(.is-animating) .project-description__toggle--more {
   display: none;
 }
 

@@ -56,6 +56,24 @@ emailButton.addEventListener("click", () => {
 
 function initProjectDescriptions() {
    const descriptions = document.querySelectorAll(".project-description");
+   const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+   ).matches;
+
+   const getCollapsedHeight = (desc) => {
+      const lineHeight = parseFloat(getComputedStyle(desc).lineHeight);
+      const lines = parseInt(getComputedStyle(desc).getPropertyValue("--desc-lines"), 10) || 2;
+      return lineHeight * lines;
+   };
+
+   const onHeightTransitionEnd = (desc, callback) => {
+      const handler = (event) => {
+         if (event.propertyName !== "max-height") return;
+         desc.removeEventListener("transitionend", handler);
+         callback();
+      };
+      desc.addEventListener("transitionend", handler);
+   };
 
    descriptions.forEach((desc) => {
       const text = desc.textContent.trim();
@@ -70,6 +88,8 @@ function initProjectDescriptions() {
       const lessBtn = desc.querySelector(".project-description__toggle--less");
 
       const updateTruncation = () => {
+         if (desc.classList.contains("is-animating")) return;
+
          desc.classList.remove("is-truncated");
          moreBtn.hidden = true;
          lessBtn.hidden = true;
@@ -88,19 +108,76 @@ function initProjectDescriptions() {
          }
       };
 
-      moreBtn.addEventListener("click", () => {
-         desc.classList.add("is-expanded");
-         desc.classList.remove("is-truncated");
-         moreBtn.hidden = true;
-         moreBtn.setAttribute("aria-expanded", "true");
-         lessBtn.hidden = false;
-      });
+      const expandDescription = () => {
+         if (desc.classList.contains("is-animating")) return;
 
-      lessBtn.addEventListener("click", () => {
+         if (prefersReducedMotion) {
+            desc.classList.remove("is-truncated");
+            desc.classList.add("is-expanded");
+            moreBtn.hidden = true;
+            lessBtn.hidden = false;
+            moreBtn.setAttribute("aria-expanded", "true");
+            return;
+         }
+
+         const startHeight = desc.clientHeight;
+         desc.classList.add("is-animating");
+         desc.style.maxHeight = `${startHeight}px`;
+         moreBtn.hidden = true;
+         desc.classList.remove("is-truncated");
+         desc.classList.add("is-expanded");
+
+         const endHeight = desc.scrollHeight;
+
+         requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+               desc.style.maxHeight = `${endHeight}px`;
+            });
+         });
+
+         onHeightTransitionEnd(desc, () => {
+            desc.classList.remove("is-animating");
+            desc.style.maxHeight = "";
+            lessBtn.hidden = false;
+            moreBtn.setAttribute("aria-expanded", "true");
+         });
+      };
+
+      const collapseDescription = () => {
+         if (desc.classList.contains("is-animating")) return;
+
+         if (prefersReducedMotion) {
+            desc.classList.remove("is-expanded");
+            moreBtn.setAttribute("aria-expanded", "false");
+            updateTruncation();
+            return;
+         }
+
+         const startHeight = desc.scrollHeight;
+         const endHeight = getCollapsedHeight(desc);
+
+         desc.classList.add("is-animating");
+         desc.style.maxHeight = `${startHeight}px`;
+         lessBtn.hidden = true;
          desc.classList.remove("is-expanded");
-         moreBtn.setAttribute("aria-expanded", "false");
-         updateTruncation();
-      });
+
+         requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+               desc.classList.add("is-truncated");
+               desc.style.maxHeight = `${endHeight}px`;
+            });
+         });
+
+         onHeightTransitionEnd(desc, () => {
+            desc.classList.remove("is-animating");
+            desc.style.maxHeight = "";
+            moreBtn.setAttribute("aria-expanded", "false");
+            updateTruncation();
+         });
+      };
+
+      moreBtn.addEventListener("click", expandDescription);
+      lessBtn.addEventListener("click", collapseDescription);
 
       desc._updateTruncation = updateTruncation;
       updateTruncation();
@@ -108,7 +185,10 @@ function initProjectDescriptions() {
 
    window.addEventListener("resize", () => {
       descriptions.forEach((desc) => {
-         if (!desc.classList.contains("is-expanded")) {
+         if (
+            !desc.classList.contains("is-expanded") &&
+            !desc.classList.contains("is-animating")
+         ) {
             desc._updateTruncation();
          }
       });
